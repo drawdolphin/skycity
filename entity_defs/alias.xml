@@ -1,0 +1,94 @@
+<root>
+    <BOOL> 		UINT8	</BOOL>
+    <UNIT_ATTRIBUTE>	FIXED_DICT
+        <implementedBy>UNIT_ATTRIBUTE.unit_attribute_inst</implementedBy>
+        <Properties>
+            <resourceName>
+                <Type> STRING </Type>
+            </resourceName>
+            <UValue>
+                <Type> UINT16 </Type>
+            </UValue>
+            <VValue>
+                <Type> UINT16 </Type>
+            </VValue>
+            <ascription>
+                <Type> UINT8 </Type>
+            </ascription>
+            <higth>
+                <Type> FLOAT </Type>
+            </higth>
+            <maxHP>
+                <Type> UINT16 </Type>
+            </maxHP>
+            <speed>
+                <Type> UINT8 </Type>
+            </speed>
+            <moveLenth>
+                <Type> UINT8 </Type>
+            </moveLenth>
+            <attackType>
+                <Type> UINT8 </Type>
+            </attackType>
+            <attackStandard>
+                <Type> UINT16 </Type>
+            </attackStandard>
+            <attackDeviation>
+                <Type> UINT16 </Type>
+            </attackDeviation>
+            <longRange>
+                <Type> UINT16 </Type>
+            </longRange>
+            <longRangeStandard>
+                <Type> UINT16 </Type>
+            </longRangeStandard>
+            <longRangeDeviation>
+                <Type> UINT16 </Type>
+            </longRangeDeviation>
+            <attackTypeName>
+                <Type> STRING </Type>
+            </attackTypeName>
+            <defense>
+                <Type> UINT16 </Type>
+            </defense>
+            <magicDefense>
+                <Type> INT8 </Type>
+            </magicDefense>
+            <luck>
+                <Type> INT8 </Type>
+            </luck>
+            <speedCount>
+                <Type> FLOAT </Type>
+            </speedCount>
+            <HP>
+                <Type> INT32 </Type>
+            </HP>
+        </Properties>
+    </UNIT_ATTRIBUTE>
+    <UNIT_ATTRIBUTE_LIST>	FIXED_DICT
+		<!--<implementedBy>UNIT_ATTRIBUTE.unit_attribute_list_inst</implementedBy>-->
+		<Properties>
+			<values>
+				<Type>	ARRAY <of> UNIT_ATTRIBUTE </of>	</Type>
+			</values>
+		</Properties>
+	</UNIT_ATTRIBUTE_LIST>	
+    <ATTACK_RESUALT>	FIXED_DICT
+        <implementedBy>ATTACK_RESUALT.attack_resualt_inst</implementedBy>
+        <Properties>
+            <damage>
+                <Type> UINT16 </Type>
+            </damage>
+            <deadFlag>
+                <Type> UINT16 </Type>
+            </deadFlag>
+        </Properties>
+    </ATTACK_RESUALT>
+    <ATTACK_RESUALT_LIST>	FIXED_DICT
+		<Properties>
+			<values>
+				<Type>	ARRAY <of> ATTACK_RESUALT </of>	</Type>
+			</values>
+		</Properties>
+	</ATTACK_RESUALT_LIST>	
+</root>

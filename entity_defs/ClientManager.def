@@ -1,0 +1,45 @@
+<root>
+     <Properties>
+        <turnUnit>
+            <Type> UNIT_ATTRIBUTE </Type>
+            <Flags> CELL_PRIVATE </Flags>
+        </turnUnit>
+        <unit>
+            <Type> UNIT_ATTRIBUTE_LIST </Type>
+            <Flags> CELL_PRIVATE </Flags>
+        </unit>
+        <attackResualtList>
+            <Type> ATTACK_RESUALT_LIST </Type>
+            <Flags> CELL_PRIVATE </Flags>
+        </attackResualtList>
+    </Properties>
+    <ClientMethods>
+
+		<SetAllUnit>
+			<Arg>	UNIT_ATTRIBUTE_LIST	</Arg>
+		</SetAllUnit>
+        <SetTurnUnit>
+            <Arg>   UNIT_ATTRIBUTE  </Arg>
+        </SetTurnUnit>
+        <UnitListUnderAttack>
+            <Arg>  ATTACK_RESUALT_LIST  </Arg>
+        </UnitListUnderAttack>
+
+	</ClientMethods>
+
+    <CellMethods>
+
+        <SetTurnFlag>
+            <Exposed/> 
+            <Arg> UINT16 </Arg>
+            <Arg> UINT16 </Arg>
+        </SetTurnFlag>
+        <UnitAttack>
+            <Exposed/> 
+            <Arg> ARRAY <of> UINT16 </of> </Arg>
+            <Arg> ARRAY <of> UINT16 </of> </Arg>
+            <Arg> BOOL </Arg>
+        </UnitAttack>
+
+	</CellMethods>
+</root>

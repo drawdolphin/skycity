@@ -1,0 +1,22 @@
+<root>
+	<Implements>
+    
+	</Implements>
+
+	<Properties>
+
+	</Properties>
+
+	<BaseMethods>
+
+    <PlayerLogin>
+      <!--玩家上线向汇报的方法 -->
+      <Arg>	MAILBOX	</Arg>
+    </PlayerLogin>
+
+  </BaseMethods>
+
+	<CellMethods>
+	</CellMethods>
+</root>
+
