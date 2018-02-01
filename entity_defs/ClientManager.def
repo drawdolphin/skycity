@@ -13,6 +13,7 @@
             <Flags> CELL_PRIVATE </Flags>
         </attackResualtList>
     </Properties>
+    
     <ClientMethods>
 
 		<SetAllUnit>

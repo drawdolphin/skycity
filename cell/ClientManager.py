@@ -3,6 +3,7 @@ import KBEngine
 import random
 import skills
 from KBEDebug import *
+from database import *
 from UNIT_ATTRIBUTE import UnitAttribute
 from ATTACK_RESUALT import AttackResualt
 
@@ -13,38 +14,16 @@ class ClientManager(KBEngine.Entity):
         self.turnFlag=True
 
         self.initGame()
-        DEBUG_MSG("unit value:",self.unit)
-        self.client.SetAllUnit(self.unit)
-
-        self.addTimer(0,0.5,0)
+        
+        self.addTimer(0,0.1,0)
+        self.addTimer(3,0.5,1)
+        self.addTimer(5,0.5,2)
 
     def initGame(self):
         #加载棋子数据#
-        newUnit=UnitAttribute()
-        newUnit.extend(['Chess Unit',2,0,0,0.5,10,3,4,0,5,2,0,0,0,'',2,0,2,0.0,10])
-        self.inserUnit(newUnit)
-
-        newUnit=UnitAttribute()
-        newUnit.extend(['Chess Unit',2,9,1,0.5,10,3,4,0,5,2,0,0,0,'',2,0,2,0.0,10])
-        self.inserUnit(newUnit)
-
-        newUnit=UnitAttribute()
-        newUnit.extend(['Long Range',4,0,0,0.5,6,2,3,1,2,1,5,5,1,'LongRangeAttack',1,0,2,0.0,6])
-        self.inserUnit(newUnit)
-
-        newUnit=UnitAttribute()
-        newUnit.extend(['Long Range',4,9,1,0.5,6,2,3,1,2,1,5,5,1,'LongRangeAttack',1,0,2,0.0,6])
-        self.inserUnit(newUnit)
-
-        newUnit=UnitAttribute()
-        newUnit.extend(['Long Range Magic',6,0,0,0.5,6,1,2,1,2,1,5,3,1,'MagicAttack',1,1,2,0.0,5])
-        self.inserUnit(newUnit)
-
-        newUnit=UnitAttribute()
-        newUnit.extend(['Long Range Magic',6,9,1,0.5,6,1,2,1,2,1,5,3,1,'MagicAttack',1,1,2,0.0,5])
-        self.inserUnit(newUnit)
-
-        self.gameBegin=False
+        self.unitlist=[["'Chess unit'",2,0,0],["'Chess unit'",2,9,1]]
+        self.listIndex=0
+        self.sqlFlag=True
 
     def inserUnit(self,newUnit):
         newUnit.AddSpeedCount()
@@ -67,13 +46,38 @@ class ClientManager(KBEngine.Entity):
 	#                              Callbacks
 	#--------------------------------------------------------------------------------------------
     def onTimer(self, id, userArg):
+        #获得要载入的棋子名称和位置信息后，查询棋子属性#
         if userArg==0:
+            if self.sqlFlag:
+                self.sqlFlag=False
+                if self.listIndex>=len(self.unitlist):
+                    self.gameBegin=False
+                    self.delTimer(id)                   
+                    return
+                getChessUnit(self.unitlist[self.listIndex][0],self.setChessData)
+        #载入所有棋子数据，传递给服务器#
+        elif userArg==1:
+            if self.gameBegin==False:
+                DEBUG_MSG("unit value:",self.unit)
+                self.client.SetAllUnit(self.unit)
+                self.delTimer(id)
+        #判断一回合是否运行结束，并判断胜负和执行下一回合#
+        elif userArg==2:
             if self.turnFlag:
                 self.turnFlag=False
                 #这应加上判断胜负#
                 self.turnUnit=self.unit['values'][0]
                 del self.unit['values'][0]
                 self.client.SetTurnUnit(self.turnUnit)
+
+    #数据库查询语句的回调函数#
+    def setChessData(self,result, rows, insertid, error):
+        newUnit=UnitAttribute()
+        newUnit.setAttribute(result,self.unitlist[self.listIndex][1],self.unitlist[self.listIndex][2],self.unitlist[self.listIndex][3])
+        DEBUG_MSG("set unit value:",newUnit)
+        self.inserUnit(newUnit)
+        self.listIndex+=1
+        self.sqlFlag=True
     
     def SetTurnFlag(self, clientID, first, second):
         self.turnFlag=True
